@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         Glide.with(this)
                 .load("https://www.metaweather.com/static/img/weather/png/$iconValue.png") // TODO move to mapper
                 .into(ivCurrentWeather)
-        tvTemp.text = "${weatherSource?.theTemp} Celsius" // TODO use strings resource
+        tvTemp.text = getString(R.string.temp_in_celsius, weatherSource?.theTemp)
         tvDescription.text = weatherSource?.weatherStateName
         tvAgeOfData.text = weatherDataResponse.time
     }

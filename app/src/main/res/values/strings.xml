@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Sample App</string>
+    <string name="temp_in_celsius">%.1f Celsius</string>
 </resources>
