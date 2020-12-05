@@ -31,18 +31,15 @@ class MainPresenter @Inject constructor(
         this.view = view
     }
 
-    override fun loadData() {
+    override fun loadWeatherData() {
         val subscribe = api.getBudapestWeather()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    view.showToast(it.toString())
-                    Log.d("Weather", "Printing Budapest weather")
-                    Log.d("Weather", it.toString())
-                }, { error ->
-                    error.printStackTrace()
-                    Log.d("Weather", error.message!!)
-                    view.showToast(error.message!!)
+                    view.showWeatherData(it)
+                }, {
+                    it.printStackTrace()
+                    view.showError(it)
                 })
         subscriptions.add(subscribe)
     }

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.widget.Toast
 import com.example.app.BaseApp
 import com.example.app.R
+import com.example.app.models.WeatherDataResponse
 import javax.inject.Inject
 
 class MainActivity: AppCompatActivity(), MainContract.View {
@@ -17,7 +18,7 @@ class MainActivity: AppCompatActivity(), MainContract.View {
         injectDependency()
         presenter.attach(this)
         presenter.subscribe()
-        presenter.loadData()
+        presenter.loadWeatherData()
     }
 
     override fun onDestroy() {
@@ -25,8 +26,12 @@ class MainActivity: AppCompatActivity(), MainContract.View {
         super.onDestroy()
     }
 
-    override fun showToast(input: String) {
-        Toast.makeText(this, input, Toast.LENGTH_LONG).show()
+    override fun showWeatherData(weatherDataResponse: WeatherDataResponse) {
+        Toast.makeText(this, weatherDataResponse.toString(), Toast.LENGTH_LONG).show()
+    }
+
+    override fun showError(t: Throwable) {
+        Toast.makeText(this, t.toString(), Toast.LENGTH_LONG).show()
     }
 
     private fun injectDependency() {
