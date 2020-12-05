@@ -1,8 +1,9 @@
 package com.example.app.ui.main
 
-import android.util.Log
+import android.os.Bundle
 import com.example.app.BaseApp
 import com.example.app.api.ApiServiceInterface
+import com.example.app.models.WeatherDataResponse
 import com.example.app.util.SharedPreferencesManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -22,7 +23,7 @@ class MainPresenter @Inject constructor(
     private val api: ApiServiceInterface = retrofit.create(ApiServiceInterface::class.java)
 
     init {
-        injectDependency()
+        BaseApp.instance.component.inject(this)
     }
 
     override fun subscribe() {}
@@ -35,7 +36,21 @@ class MainPresenter @Inject constructor(
         this.view = view
     }
 
+    override fun showData(savedInstanceState: Bundle?) {
+        (savedInstanceState?.getSerializable(MainActivity.WEATHER_DATA_INSTANCE_STATE)
+                as? WeatherDataResponse)?.let {
+            if (System.currentTimeMillis() > parseDate(it.time) + DATA_EXPIRATION_TIME_MILLIS) {
+                loadWeatherData()
+            } else {
+                view.showWeatherData(it)
+            }
+        } ?: run {
+            loadWeatherData()
+        }
+    }
+
     override fun loadWeatherData() {
+        view.showLoading(true)
         val subscribe = api.getBudapestWeather()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -43,10 +58,6 @@ class MainPresenter @Inject constructor(
                     sharedPreferencesManager.saveWeatherData(it)
                     view.showWeatherData(it)
                     view.showLoading(false)
-
-//                    val millis = parseDate(it.time)
-//                    Log.d("xzxz", "$millis")
-
                 }, {
                     it.printStackTrace()
                     view.showError(it)
@@ -55,8 +66,14 @@ class MainPresenter @Inject constructor(
         subscriptions.add(subscribe)
     }
 
+    private fun parseDate(dateString: String): Long {
+        // TODO move this to mapper
+        val date: Date? = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX", Locale.US)
+                .parse(dateString)
+        return date?.time ?: 0
+    }
 
-    private fun injectDependency() {
-        BaseApp.instance.component.inject(this)
+    companion object {
+        const val DATA_EXPIRATION_TIME_MILLIS = 5 * 1000 // TODO make it 1 minute
     }
 }

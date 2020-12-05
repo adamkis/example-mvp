@@ -1,7 +1,6 @@
 package com.example.app.ui.main
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.Toast
 import com.bumptech.glide.Glide
@@ -27,25 +26,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         presenter.attach(this)
         presenter.subscribe()
         setupViewElements()
-        showData(savedInstanceState)
-    }
-
-    private fun showData(savedInstanceState: Bundle?) {
-        (savedInstanceState?.getSerializable(WEATHER_DATA_INSTANCE_STATE)
-                as? WeatherDataResponse)?.let {
-            if (System.currentTimeMillis() > parseDate(it.time) + DATA_EXPIRATION_TIME_MILLIS) {
-                loadData()
-            } else {
-                showWeatherData(it)
-            }
-        } ?: run {
-            loadData()
-        }
-    }
-
-    private fun loadData() {
-        showLoading(true)
-        presenter.loadWeatherData()
+        presenter.showData(savedInstanceState)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -84,16 +65,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         srlRefresh.isRefreshing = isLoading
     }
 
-    private fun parseDate(dateString: String): Long {
-        // TODO move this to mapper
-        val date: Date? = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX", Locale.US)
-                .parse(dateString)
-        return date?.time ?: 0
-    }
-
-
     companion object {
         const val WEATHER_DATA_INSTANCE_STATE = "WEATHER_DATA_INSTANCE_STATE"
-        const val DATA_EXPIRATION_TIME_MILLIS = 60 * 1000 // 1 minute
     }
 }
