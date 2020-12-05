@@ -7,7 +7,7 @@ import com.bumptech.glide.Glide
 import com.example.app.BaseApp
 import com.example.app.R
 import com.example.app.feature.weather.model.WeatherVM
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_weather.*
 import javax.inject.Inject
 
 class WeatherActivity : AppCompatActivity(), WeatherContract.View {
@@ -17,7 +17,7 @@ class WeatherActivity : AppCompatActivity(), WeatherContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_weather)
         BaseApp.component.inject(this)
         presenter.attach(this)
         presenter.subscribe()
