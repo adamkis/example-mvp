@@ -1,8 +1,10 @@
 package com.example.app.data
 
 import android.content.Context
+import android.security.keystore.KeyGenParameterSpec
+import android.security.keystore.KeyProperties
 import androidx.security.crypto.EncryptedSharedPreferences
-import androidx.security.crypto.MasterKeys
+import androidx.security.crypto.MasterKey
 import com.example.app.data.model.WeatherDataResponse
 import com.google.gson.Gson
 import javax.inject.Inject
@@ -13,16 +15,27 @@ class SharedPreferencesManager @Inject constructor(
         private val gson: Gson
 ) {
 
+    private val keyGenParameterSpec = KeyGenParameterSpec.Builder(
+            MasterKey.DEFAULT_MASTER_KEY_ALIAS,
+            KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT)
+            .setBlockModes(KeyProperties.BLOCK_MODE_GCM)
+            .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
+            .setKeySize(MasterKey.DEFAULT_AES_GCM_MASTER_KEY_SIZE)
+            .build()
+
+    private val masterKey = MasterKey.Builder(context)
+            .setKeyGenParameterSpec(keyGenParameterSpec)
+            .build()
+
     private val sharedPref = EncryptedSharedPreferences.create(
-            KEY_SHARED_PREF_FILE,
-            MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC),
             context,
+            KEY_SHARED_PREF_FILE,
+            masterKey,
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-    )
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM)
 
     fun saveWeatherData(weatherDataResponse: WeatherDataResponse) {
-        with (sharedPref.edit()) {
+        with(sharedPref.edit()) {
             putString(KEY_WEATHER_DATA, gson.toJson(weatherDataResponse))
             apply()
         }
