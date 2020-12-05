@@ -20,7 +20,7 @@ class MainPresenter @Inject constructor(
     private lateinit var view: MainContract.View
 
     init {
-        BaseApp.instance.component.inject(this)
+        BaseApp.component.inject(this)
     }
 
     override fun subscribe() {}

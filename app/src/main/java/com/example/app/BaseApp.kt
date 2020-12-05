@@ -5,18 +5,16 @@ import com.example.app.di.component.ApplicationComponent
 import com.example.app.di.component.DaggerApplicationComponent
 import com.example.app.di.module.ContextModule
 
-class BaseApp: Application() {
+class BaseApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        instance = this
+        component = DaggerApplicationComponent.builder()
+                .contextModule(ContextModule(this))
+                .build()
     }
 
-    val component: ApplicationComponent  = DaggerApplicationComponent.builder()
-            .contextModule(ContextModule(this))
-            .build()
-
     companion object {
-        lateinit var instance: BaseApp private set
+        lateinit var component: ApplicationComponent private set
     }
 }

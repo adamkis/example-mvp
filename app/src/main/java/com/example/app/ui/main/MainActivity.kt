@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        BaseApp.instance.component.inject(this)
+        BaseApp.component.inject(this)
         presenter.attach(this)
         presenter.subscribe()
         setupViewElements()
