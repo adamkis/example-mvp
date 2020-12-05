@@ -29,10 +29,14 @@ class MainActivity: AppCompatActivity(), MainContract.View {
     }
 
     override fun showWeatherData(weatherDataResponse: WeatherDataResponse) {
-        val iconValue = weatherDataResponse.consolidatedWeather?.get(0)?.weatherStateAbbr
+        val weatherSource = weatherDataResponse.consolidatedWeather?.get(0)
+        val iconValue = weatherSource?.weatherStateAbbr // TODO move to mapper
         Glide.with(this)
-                .load("https://www.metaweather.com/static/img/weather/png/$iconValue.png")
+                .load("https://www.metaweather.com/static/img/weather/png/$iconValue.png") // TODO move to mapper
                 .into(ivCurrentWeather)
+        tvTemp.text = "${weatherSource?.theTemp} Celsius" // TODO use strings resource
+        tvDescription.text = weatherSource?.weatherStateName
+        tvAgeOfData.text = weatherDataResponse.time
     }
 
     override fun showError(t: Throwable) {
