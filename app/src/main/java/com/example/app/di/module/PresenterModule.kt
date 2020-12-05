@@ -10,11 +10,10 @@ import javax.inject.Singleton
 
 @Module
 class PresenterModule {
-
     @Provides
     @Singleton
-    fun providePresenter(retrofit: Retrofit, sharedPreferencesManager: SharedPreferencesManager): MainContract.Presenter {
+    fun providePresenter(sharedPreferencesManager: SharedPreferencesManager,
+                         retrofit: Retrofit): MainContract.Presenter {
         return MainPresenter(sharedPreferencesManager, retrofit)
     }
-
 }
