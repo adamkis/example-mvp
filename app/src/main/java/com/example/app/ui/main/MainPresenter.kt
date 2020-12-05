@@ -1,6 +1,5 @@
 package com.example.app.ui.main
 
-import android.util.Log
 import com.example.app.BaseApp
 import com.example.app.api.ApiServiceInterface
 import io.reactivex.android.schedulers.AndroidSchedulers

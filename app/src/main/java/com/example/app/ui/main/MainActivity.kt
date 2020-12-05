@@ -20,12 +20,19 @@ class MainActivity: AppCompatActivity(), MainContract.View {
         injectDependency()
         presenter.attach(this)
         presenter.subscribe()
+        setupViewElements()
         presenter.loadWeatherData()
     }
 
     override fun onDestroy() {
         presenter.unsubscribe()
         super.onDestroy()
+    }
+
+    private fun setupViewElements() {
+        srlRefresh.setOnRefreshListener {
+            presenter.loadWeatherData()
+        }
     }
 
     override fun showWeatherData(weatherDataResponse: WeatherDataResponse) {
@@ -37,6 +44,7 @@ class MainActivity: AppCompatActivity(), MainContract.View {
         tvTemp.text = "${weatherSource?.theTemp} Celsius" // TODO use strings resource
         tvDescription.text = weatherSource?.weatherStateName
         tvAgeOfData.text = weatherDataResponse.time
+        srlRefresh.isRefreshing = false
     }
 
     override fun showError(t: Throwable) {
