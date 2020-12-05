@@ -1,9 +1,6 @@
 package com.example.app.di.component
 
-import com.example.app.di.module.ContextModule
-import com.example.app.di.module.GsonModule
-import com.example.app.di.module.PresenterModule
-import com.example.app.di.module.RetrofitModule
+import com.example.app.di.module.*
 import com.example.app.ui.main.MainActivity
 import com.example.app.ui.main.MainPresenter
 import dagger.Component
@@ -14,7 +11,8 @@ import javax.inject.Singleton
     PresenterModule::class,
     RetrofitModule::class,
     ContextModule::class,
-    GsonModule::class
+    GsonModule::class,
+    WeatherApiModule::class
 ])
 interface ApplicationComponent {
     fun inject(mainPresenter: MainPresenter)

@@ -1,7 +1,7 @@
 package com.example.app.ui.main
 
 import com.example.app.BaseApp
-import com.example.app.api.ApiServiceInterface
+import com.example.app.api.WeatherApi
 import com.example.app.util.SharedPreferencesManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -13,12 +13,11 @@ import javax.inject.Inject
 
 class MainPresenter @Inject constructor(
         private val sharedPreferencesManager: SharedPreferencesManager,
-        retrofit: Retrofit
+        private val weatherApi: WeatherApi
 ) : MainContract.Presenter {
 
     private val subscriptions = CompositeDisposable()
     private lateinit var view: MainContract.View
-    private val api: ApiServiceInterface = retrofit.create(ApiServiceInterface::class.java) // TODO move API creation into module
 
     init {
         BaseApp.instance.component.inject(this)
@@ -48,7 +47,7 @@ class MainPresenter @Inject constructor(
 
     override fun loadWeatherData() {
         view.showLoading(true)
-        val subscribe = api.getBudapestWeather()
+        val subscribe = weatherApi.getBudapestWeather()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
