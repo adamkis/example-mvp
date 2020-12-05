@@ -4,5 +4,6 @@ data class WeatherVM(
         val icon: String,
         val temp: String,
         val description: String,
-        val dateTime: String
+        val dateTime: String,
+        val dateTimeMillis: Long
 )

@@ -4,6 +4,8 @@ import android.content.Context
 import com.example.app.R
 import com.example.app.models.WeatherDataResponse
 import com.example.app.ui.model.WeatherVM
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -17,7 +19,14 @@ class WeatherDataMapper @Inject constructor(private val context: Context) {
                         "${weatherSource?.weatherStateAbbr}.png",
                 temp = context.getString(R.string.temp_in_celsius, weatherSource?.theTemp),
                 description = weatherSource?.weatherStateName ?: "",
-                dateTime = weatherDataResponse.time
+                dateTime = weatherDataResponse.time,
+                dateTimeMillis = parseDate(weatherDataResponse.time)
         )
+    }
+
+    private fun parseDate(dateString: String): Long {
+        val date: Date? = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX", Locale.US)
+                .parse(dateString)
+        return date?.time ?: 0
     }
 }

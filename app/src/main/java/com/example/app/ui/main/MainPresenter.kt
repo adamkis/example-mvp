@@ -7,8 +7,6 @@ import com.example.app.util.SharedPreferencesManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import java.text.SimpleDateFormat
-import java.util.*
 import javax.inject.Inject
 
 class MainPresenter @Inject constructor(
@@ -36,10 +34,11 @@ class MainPresenter @Inject constructor(
 
     override fun showData() {
         (sharedPreferencesManager.loadWeatherData())?.let {
-            if (System.currentTimeMillis() > parseDate(it.time) + DATA_EXPIRATION_TIME_MILLIS) {
+            val weatherVM = weatherDataMapper.map(it)
+            if (System.currentTimeMillis() > weatherVM.dateTimeMillis + DATA_EXPIRATION_TIME_MILLIS) {
                 loadWeatherData()
             } else {
-                view.showWeatherData(weatherDataMapper.map(it))
+                view.showWeatherData(weatherVM)
             }
         } ?: run {
             loadWeatherData()
@@ -63,14 +62,7 @@ class MainPresenter @Inject constructor(
         subscriptions.add(subscribe)
     }
 
-    private fun parseDate(dateString: String): Long {
-        // TODO move this to mapper
-        val date: Date? = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX", Locale.US)
-                .parse(dateString)
-        return date?.time ?: 0
-    }
-
     companion object {
-        const val DATA_EXPIRATION_TIME_MILLIS = 60 * 1000
+        const val DATA_EXPIRATION_TIME_MILLIS = 60 * 1000 // 1 minute
     }
 }
