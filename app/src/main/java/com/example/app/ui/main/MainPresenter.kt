@@ -21,9 +21,7 @@ class MainPresenter @Inject constructor(
         injectDependency()
     }
 
-    override fun subscribe() {
-
-    }
+    override fun subscribe() {}
 
     override fun unsubscribe() {
         subscriptions.clear()
