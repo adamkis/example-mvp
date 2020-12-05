@@ -71,6 +71,6 @@ class MainPresenter @Inject constructor(
     }
 
     companion object {
-        const val DATA_EXPIRATION_TIME_MILLIS = 5 * 1000 // TODO make it 1 minute
+        const val DATA_EXPIRATION_TIME_MILLIS = 60 * 1000
     }
 }
