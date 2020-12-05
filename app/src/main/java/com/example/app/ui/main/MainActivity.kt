@@ -1,15 +1,13 @@
 package com.example.app.ui.main
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.app.BaseApp
 import com.example.app.R
 import com.example.app.models.WeatherDataResponse
 import kotlinx.android.synthetic.main.activity_main.*
-import java.text.SimpleDateFormat
-import java.util.*
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), MainContract.View {
