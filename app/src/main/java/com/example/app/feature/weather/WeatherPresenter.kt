@@ -55,6 +55,9 @@ class WeatherPresenter @Inject constructor(
                 }, {
                     it.printStackTrace()
                     view.showError(it)
+                    (sharedPreferencesManager.loadWeatherData())?.let { savedData ->
+                        view.showWeatherData(weatherDataMapper.map(savedData))
+                    }
                     view.showLoading(false)
                 })
         subscriptions.add(subscribe)
