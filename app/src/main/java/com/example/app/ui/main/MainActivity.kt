@@ -29,10 +29,10 @@ class MainActivity: AppCompatActivity(), MainContract.View {
     }
 
     override fun showWeatherData(weatherDataResponse: WeatherDataResponse) {
+        val iconValue = weatherDataResponse.consolidatedWeather?.get(0)?.weatherStateAbbr
         Glide.with(this)
-                .load("https://www.metaweather.com/static/img/weather/png/sn.png")
+                .load("https://www.metaweather.com/static/img/weather/png/$iconValue.png")
                 .into(ivCurrentWeather)
-        Toast.makeText(this, weatherDataResponse.toString(), Toast.LENGTH_LONG).show()
     }
 
     override fun showError(t: Throwable) {
