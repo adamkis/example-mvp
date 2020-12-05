@@ -2,7 +2,7 @@ package com.example.app.feature.weather.mapper
 
 import android.content.Context
 import com.example.app.R
-import com.example.app.models.WeatherDataResponse
+import com.example.app.data.model.WeatherDataResponse
 import com.example.app.feature.weather.model.WeatherVM
 import java.text.SimpleDateFormat
 import java.util.*

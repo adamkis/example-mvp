@@ -1,10 +1,10 @@
 package com.example.app.di.module
 
-import com.example.app.api.WeatherApi
+import com.example.app.data.api.WeatherApi
 import com.example.app.feature.weather.mapper.WeatherDataMapper
 import com.example.app.feature.weather.WeatherContract
 import com.example.app.feature.weather.WeatherPresenter
-import com.example.app.util.SharedPreferencesManager
+import com.example.app.data.SharedPreferencesManager
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

@@ -1,7 +1,7 @@
-package com.example.app.util
+package com.example.app.data
 
 import android.content.Context
-import com.example.app.models.WeatherDataResponse
+import com.example.app.data.model.WeatherDataResponse
 import com.google.gson.Gson
 import javax.inject.Inject
 
@@ -10,7 +10,7 @@ class SharedPreferencesManager @Inject constructor(
         private val gson: Gson
 ) {
 
-    val sharedPref = context.getSharedPreferences(KEY_SHARED_PREF_FILE, Context.MODE_PRIVATE)
+    private val sharedPref = context.getSharedPreferences(KEY_SHARED_PREF_FILE, Context.MODE_PRIVATE)
 
     fun saveWeatherData(weatherDataResponse: WeatherDataResponse) {
         with (sharedPref.edit()) {
@@ -26,7 +26,6 @@ class SharedPreferencesManager @Inject constructor(
 
     companion object {
         const val KEY_SHARED_PREF_FILE = "KEY_SHARED_PREF_FILE_EXAMPLE_APP"
-
         const val KEY_WEATHER_DATA = "KEY_WEATHER_DATA"
     }
 }

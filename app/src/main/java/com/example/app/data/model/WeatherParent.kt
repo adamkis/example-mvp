@@ -1,4 +1,4 @@
-package com.example.app.models
+package com.example.app.data.model
 
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable

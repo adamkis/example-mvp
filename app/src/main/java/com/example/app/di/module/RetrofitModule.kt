@@ -1,6 +1,6 @@
 package com.example.app.di.module
 
-import com.example.app.util.Constants
+import com.example.app.data.Constants
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit

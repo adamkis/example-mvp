@@ -1,6 +1,6 @@
-package com.example.app.api
+package com.example.app.data.api
 
-import com.example.app.models.WeatherDataResponse
+import com.example.app.data.model.WeatherDataResponse
 import io.reactivex.Observable
 import retrofit2.http.GET
 
