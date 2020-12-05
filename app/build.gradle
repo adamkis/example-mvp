@@ -22,8 +22,10 @@ android {
 }
 
 dependencies {
+    // core
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation "androidx.security:security-crypto:$androidx_crypto_version"
     // retrofit + gson
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
@@ -41,7 +43,7 @@ dependencies {
     // ui
     implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swiperefreshlayout_version"
-
+    // test
     testImplementation "junit:junit:$junit_version"
     androidTestImplementation "androidx.test.ext:junit:$android_junit_version"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"

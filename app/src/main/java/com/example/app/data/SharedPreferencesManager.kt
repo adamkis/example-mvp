@@ -1,16 +1,25 @@
 package com.example.app.data
 
 import android.content.Context
+import androidx.security.crypto.EncryptedSharedPreferences
+import androidx.security.crypto.MasterKeys
 import com.example.app.data.model.WeatherDataResponse
 import com.google.gson.Gson
 import javax.inject.Inject
+
 
 class SharedPreferencesManager @Inject constructor(
         context: Context,
         private val gson: Gson
 ) {
 
-    private val sharedPref = context.getSharedPreferences(KEY_SHARED_PREF_FILE, Context.MODE_PRIVATE)
+    private val sharedPref = EncryptedSharedPreferences.create(
+            KEY_SHARED_PREF_FILE,
+            MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC),
+            context,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+    )
 
     fun saveWeatherData(weatherDataResponse: WeatherDataResponse) {
         with (sharedPref.edit()) {
