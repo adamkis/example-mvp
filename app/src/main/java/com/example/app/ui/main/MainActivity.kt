@@ -3,9 +3,8 @@ package com.example.app.ui.main
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
+import com.example.app.BaseApp
 import com.example.app.R
-import com.example.app.di.component.DaggerActivityComponent
-import com.example.app.di.module.ActivityModule
 import javax.inject.Inject
 
 class MainActivity: AppCompatActivity(), MainContract.View {
@@ -31,10 +30,6 @@ class MainActivity: AppCompatActivity(), MainContract.View {
     }
 
     private fun injectDependency() {
-        val activityComponent = DaggerActivityComponent.builder()
-                .activityModule(ActivityModule(this))
-                .build()
-
-        activityComponent.inject(this)
+        BaseApp.instance.component.inject(this)
     }
 }

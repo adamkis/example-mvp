@@ -1,16 +1,25 @@
 package com.example.app.ui.main
 
 import android.util.Log
+import com.example.app.BaseApp
 import com.example.app.api.ApiServiceInterface
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import retrofit2.Retrofit
+import javax.inject.Inject
 
-class MainPresenter: MainContract.Presenter {
+class MainPresenter @Inject constructor(
+        retrofit: Retrofit
+) : MainContract.Presenter {
 
     private val subscriptions = CompositeDisposable()
     private lateinit var view: MainContract.View
-    private val api: ApiServiceInterface = ApiServiceInterface.create()
+    private val api: ApiServiceInterface = retrofit.create(ApiServiceInterface::class.java)
+
+    init {
+        injectDependency()
+    }
 
     override fun subscribe() {
 
@@ -40,4 +49,8 @@ class MainPresenter: MainContract.Presenter {
         subscriptions.add(subscribe)
     }
 
+
+    private fun injectDependency() {
+        BaseApp.instance.component.inject(this)
+    }
 }

@@ -4,6 +4,7 @@ import android.app.Application
 import com.example.app.di.component.ApplicationComponent
 import com.example.app.di.component.DaggerApplicationComponent
 import com.example.app.di.module.ApplicationModule
+import com.example.app.di.module.RetrofitModule
 
 class BaseApp: Application() {
 
@@ -22,7 +23,9 @@ class BaseApp: Application() {
 
     fun setup() {
         component = DaggerApplicationComponent.builder()
-                .applicationModule(ApplicationModule(this)).build()
+                .applicationModule(ApplicationModule(this))
+                .retrofitModule(RetrofitModule())
+                .build()
         component.inject(this)
     }
 
