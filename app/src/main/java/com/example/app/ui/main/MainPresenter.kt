@@ -2,18 +2,19 @@ package com.example.app.ui.main
 
 import com.example.app.BaseApp
 import com.example.app.api.WeatherApi
+import com.example.app.domain.WeatherDataMapper
 import com.example.app.util.SharedPreferencesManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import retrofit2.Retrofit
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
 class MainPresenter @Inject constructor(
         private val sharedPreferencesManager: SharedPreferencesManager,
-        private val weatherApi: WeatherApi
+        private val weatherApi: WeatherApi,
+        private val weatherDataMapper: WeatherDataMapper
 ) : MainContract.Presenter {
 
     private val subscriptions = CompositeDisposable()
@@ -38,7 +39,7 @@ class MainPresenter @Inject constructor(
             if (System.currentTimeMillis() > parseDate(it.time) + DATA_EXPIRATION_TIME_MILLIS) {
                 loadWeatherData()
             } else {
-                view.showWeatherData(it)
+                view.showWeatherData(weatherDataMapper.map(it))
             }
         } ?: run {
             loadWeatherData()
@@ -52,7 +53,7 @@ class MainPresenter @Inject constructor(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     sharedPreferencesManager.saveWeatherData(it)
-                    view.showWeatherData(it)
+                    view.showWeatherData(weatherDataMapper.map(it))
                     view.showLoading(false)
                 }, {
                     it.printStackTrace()
