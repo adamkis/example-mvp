@@ -1,9 +1,7 @@
 package com.example.app.ui.main
 
-import android.os.Bundle
 import com.example.app.BaseApp
 import com.example.app.api.ApiServiceInterface
-import com.example.app.models.WeatherDataResponse
 import com.example.app.util.SharedPreferencesManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -20,8 +18,7 @@ class MainPresenter @Inject constructor(
 
     private val subscriptions = CompositeDisposable()
     private lateinit var view: MainContract.View
-    private val api: ApiServiceInterface = retrofit.create(ApiServiceInterface::class.java)
-    private var weatherDataResponse: WeatherDataResponse? = null
+    private val api: ApiServiceInterface = retrofit.create(ApiServiceInterface::class.java) // TODO move API creation into module
 
     init {
         BaseApp.instance.component.inject(this)
@@ -37,9 +34,8 @@ class MainPresenter @Inject constructor(
         this.view = view
     }
 
-    override fun showData(savedInstanceState: Bundle?) {
-        (savedInstanceState?.getSerializable(WEATHER_DATA_INSTANCE_STATE)
-                as? WeatherDataResponse)?.let {
+    override fun showData() {
+        (sharedPreferencesManager.loadWeatherData())?.let {
             if (System.currentTimeMillis() > parseDate(it.time) + DATA_EXPIRATION_TIME_MILLIS) {
                 loadWeatherData()
             } else {
@@ -50,17 +46,12 @@ class MainPresenter @Inject constructor(
         }
     }
 
-    override fun saveData(outState: Bundle) {
-        outState.putSerializable(WEATHER_DATA_INSTANCE_STATE, weatherDataResponse)
-    }
-
     override fun loadWeatherData() {
         view.showLoading(true)
         val subscribe = api.getBudapestWeather()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    this.weatherDataResponse = it
                     sharedPreferencesManager.saveWeatherData(it)
                     view.showWeatherData(it)
                     view.showLoading(false)
@@ -81,6 +72,5 @@ class MainPresenter @Inject constructor(
 
     companion object {
         const val DATA_EXPIRATION_TIME_MILLIS = 5 * 1000 // TODO make it 1 minute
-        const val WEATHER_DATA_INSTANCE_STATE = "WEATHER_DATA_INSTANCE_STATE"
     }
 }

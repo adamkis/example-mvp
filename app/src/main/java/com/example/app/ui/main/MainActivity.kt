@@ -22,12 +22,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         presenter.attach(this)
         presenter.subscribe()
         setupViewElements()
-        presenter.showData(savedInstanceState)
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        presenter.saveData(outState)
-        super.onSaveInstanceState(outState)
+        presenter.showData()
     }
 
     override fun onDestroy() {
