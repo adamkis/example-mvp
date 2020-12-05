@@ -1,13 +1,13 @@
 package com.example.app.di.module
 
-import android.content.Context
+import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class ContextModule(private val appContext: Context) {
+class GsonModule {
     @Provides
     @Singleton
-    fun provideContext(): Context = appContext
+    fun provideGson(): Gson = Gson()
 }
