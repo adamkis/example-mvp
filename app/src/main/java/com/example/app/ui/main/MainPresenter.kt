@@ -44,8 +44,8 @@ class MainPresenter @Inject constructor(
                     view.showWeatherData(it)
                     view.showLoading(false)
 
-                    val millis = parseDate(it.time)
-                    Log.d("xzxz", "$millis")
+//                    val millis = parseDate(it.time)
+//                    Log.d("xzxz", "$millis")
 
                 }, {
                     it.printStackTrace()
@@ -53,13 +53,6 @@ class MainPresenter @Inject constructor(
                     view.showLoading(false)
                 })
         subscriptions.add(subscribe)
-    }
-
-    private fun parseDate(dateString: String): Long? {
-        // TODO move this to mapper
-        val date: Date? = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX", Locale.US)
-                .parse(dateString)
-        return date?.time
     }
 
 

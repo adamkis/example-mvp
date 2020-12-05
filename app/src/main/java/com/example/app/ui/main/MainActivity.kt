@@ -1,7 +1,7 @@
 package com.example.app.ui.main
 
 import android.os.Bundle
-import android.os.PersistableBundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.Toast
 import com.bumptech.glide.Glide
@@ -9,11 +9,14 @@ import com.example.app.BaseApp
 import com.example.app.R
 import com.example.app.models.WeatherDataResponse
 import kotlinx.android.synthetic.main.activity_main.*
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 
-class MainActivity: AppCompatActivity(), MainContract.View {
+class MainActivity : AppCompatActivity(), MainContract.View {
 
-    @Inject lateinit var presenter: MainContract.Presenter
+    @Inject
+    lateinit var presenter: MainContract.Presenter
 
     private var weatherDataResponse: WeatherDataResponse? = null
 
@@ -30,11 +33,19 @@ class MainActivity: AppCompatActivity(), MainContract.View {
     private fun showData(savedInstanceState: Bundle?) {
         (savedInstanceState?.getSerializable(WEATHER_DATA_INSTANCE_STATE)
                 as? WeatherDataResponse)?.let {
-            showWeatherData(it)
+            if (System.currentTimeMillis() > parseDate(it.time) + DATA_EXPIRATION_TIME_MILLIS) {
+                loadData()
+            } else {
+                showWeatherData(it)
+            }
         } ?: run {
-            showLoading(true)
-            presenter.loadWeatherData()
+            loadData()
         }
+    }
+
+    private fun loadData() {
+        showLoading(true)
+        presenter.loadWeatherData()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -73,7 +84,16 @@ class MainActivity: AppCompatActivity(), MainContract.View {
         srlRefresh.isRefreshing = isLoading
     }
 
+    private fun parseDate(dateString: String): Long {
+        // TODO move this to mapper
+        val date: Date? = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX", Locale.US)
+                .parse(dateString)
+        return date?.time ?: 0
+    }
+
+
     companion object {
         const val WEATHER_DATA_INSTANCE_STATE = "WEATHER_DATA_INSTANCE_STATE"
+        const val DATA_EXPIRATION_TIME_MILLIS = 60 * 1000 // 1 minute
     }
 }
