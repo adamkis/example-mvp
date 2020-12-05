@@ -2,8 +2,8 @@ package com.example.app.di.module
 
 import com.example.app.api.WeatherApi
 import com.example.app.feature.weather.mapper.WeatherDataMapper
-import com.example.app.feature.weather.MainContract
-import com.example.app.feature.weather.MainPresenter
+import com.example.app.feature.weather.WeatherContract
+import com.example.app.feature.weather.WeatherPresenter
 import com.example.app.util.SharedPreferencesManager
 import dagger.Module
 import dagger.Provides
@@ -17,7 +17,7 @@ class PresenterModule {
             sharedPreferencesManager: SharedPreferencesManager,
             weatherApi: WeatherApi,
             weatherDataMapper: WeatherDataMapper
-    ): MainContract.Presenter {
-        return MainPresenter(sharedPreferencesManager, weatherApi, weatherDataMapper)
+    ): WeatherContract.Presenter {
+        return WeatherPresenter(sharedPreferencesManager, weatherApi, weatherDataMapper)
     }
 }

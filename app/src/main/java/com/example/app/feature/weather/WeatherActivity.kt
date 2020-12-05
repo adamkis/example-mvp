@@ -10,10 +10,10 @@ import com.example.app.feature.weather.model.WeatherVM
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity(), MainContract.View {
+class WeatherActivity : AppCompatActivity(), WeatherContract.View {
 
     @Inject
-    lateinit var presenter: MainContract.Presenter
+    lateinit var presenter: WeatherContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

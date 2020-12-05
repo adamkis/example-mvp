@@ -9,14 +9,14 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class MainPresenter @Inject constructor(
+class WeatherPresenter @Inject constructor(
         private val sharedPreferencesManager: SharedPreferencesManager,
         private val weatherApi: WeatherApi,
         private val weatherDataMapper: WeatherDataMapper
-) : MainContract.Presenter {
+) : WeatherContract.Presenter {
 
     private val subscriptions = CompositeDisposable()
-    private lateinit var view: MainContract.View
+    private lateinit var view: WeatherContract.View
 
     init {
         BaseApp.component.inject(this)
@@ -28,7 +28,7 @@ class MainPresenter @Inject constructor(
         subscriptions.clear()
     }
 
-    override fun attach(view: MainContract.View) {
+    override fun attach(view: WeatherContract.View) {
         this.view = view
     }
 

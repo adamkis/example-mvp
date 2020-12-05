@@ -1,8 +1,8 @@
 package com.example.app.di.component
 
 import com.example.app.di.module.*
-import com.example.app.feature.weather.MainActivity
-import com.example.app.feature.weather.MainPresenter
+import com.example.app.feature.weather.WeatherActivity
+import com.example.app.feature.weather.WeatherPresenter
 import dagger.Component
 import javax.inject.Singleton
 
@@ -15,6 +15,6 @@ import javax.inject.Singleton
     WeatherApiModule::class
 ])
 interface ApplicationComponent {
-    fun inject(mainPresenter: MainPresenter)
-    fun inject(mainActivity: MainActivity)
+    fun inject(weatherPresenter: WeatherPresenter)
+    fun inject(weatherActivity: WeatherActivity)
 }
