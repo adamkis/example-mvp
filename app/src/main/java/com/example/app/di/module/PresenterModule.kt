@@ -8,7 +8,7 @@ import retrofit2.Retrofit
 import javax.inject.Singleton
 
 @Module
-class ApplicationModule {
+class PresenterModule {
 
     @Provides
     @Singleton
