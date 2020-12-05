@@ -17,10 +17,11 @@ class MainActivity: AppCompatActivity(), MainContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        injectDependency()
+        BaseApp.instance.component.inject(this)
         presenter.attach(this)
         presenter.subscribe()
         setupViewElements()
+        showLoading(true)
         presenter.loadWeatherData()
     }
 
@@ -44,14 +45,13 @@ class MainActivity: AppCompatActivity(), MainContract.View {
         tvTemp.text = "${weatherSource?.theTemp} Celsius" // TODO use strings resource
         tvDescription.text = weatherSource?.weatherStateName
         tvAgeOfData.text = weatherDataResponse.time
-        srlRefresh.isRefreshing = false
     }
 
     override fun showError(t: Throwable) {
         Toast.makeText(this, t.toString(), Toast.LENGTH_LONG).show()
     }
 
-    private fun injectDependency() {
-        BaseApp.instance.component.inject(this)
+    override fun showLoading(isLoading: Boolean) {
+        srlRefresh.isRefreshing = isLoading
     }
 }

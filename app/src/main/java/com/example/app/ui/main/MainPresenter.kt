@@ -36,9 +36,11 @@ class MainPresenter @Inject constructor(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     view.showWeatherData(it)
+                    view.showLoading(false)
                 }, {
                     it.printStackTrace()
                     view.showError(it)
+                    view.showLoading(false)
                 })
         subscriptions.add(subscribe)
     }

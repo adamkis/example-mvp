@@ -10,5 +10,6 @@ class BaseContract {
 
     interface View {
         fun showError(t: Throwable)
+        fun showLoading(isLoading: Boolean)
     }
 }
