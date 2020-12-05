@@ -8,6 +8,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import retrofit2.Retrofit
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 
 class MainPresenter @Inject constructor(
@@ -41,12 +43,23 @@ class MainPresenter @Inject constructor(
                     sharedPreferencesManager.saveWeatherData(it)
                     view.showWeatherData(it)
                     view.showLoading(false)
+
+                    val millis = parseDate(it.time)
+                    Log.d("xzxz", "$millis")
+
                 }, {
                     it.printStackTrace()
                     view.showError(it)
                     view.showLoading(false)
                 })
         subscriptions.add(subscribe)
+    }
+
+    private fun parseDate(dateString: String): Long? {
+        // TODO move this to mapper
+        val date: Date? = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX", Locale.US)
+                .parse(dateString)
+        return date?.time
     }
 
 
