@@ -15,8 +15,6 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     @Inject
     lateinit var presenter: MainContract.Presenter
 
-    private var weatherDataResponse: WeatherDataResponse? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -28,7 +26,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putSerializable(WEATHER_DATA_INSTANCE_STATE, weatherDataResponse)
+        presenter.saveData(outState)
         super.onSaveInstanceState(outState)
     }
 
@@ -44,7 +42,6 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     override fun showWeatherData(weatherDataResponse: WeatherDataResponse) {
-        this.weatherDataResponse = weatherDataResponse // tODO do not store here
         val weatherSource = weatherDataResponse.consolidatedWeather?.get(0)
         val iconValue = weatherSource?.weatherStateAbbr // TODO move to mapper
         Glide.with(this)
@@ -61,9 +58,5 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun showLoading(isLoading: Boolean) {
         srlRefresh.isRefreshing = isLoading
-    }
-
-    companion object {
-        const val WEATHER_DATA_INSTANCE_STATE = "WEATHER_DATA_INSTANCE_STATE"
     }
 }

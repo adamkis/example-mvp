@@ -6,12 +6,13 @@ import com.example.app.ui.base.BaseContract
 
 class MainContract {
 
-    interface View: BaseContract.View {
+    interface View : BaseContract.View {
         fun showWeatherData(weatherDataResponse: WeatherDataResponse)
     }
 
-    interface Presenter: BaseContract.Presenter<View> {
+    interface Presenter : BaseContract.Presenter<View> {
         fun loadWeatherData()
         fun showData(savedInstanceState: Bundle?)
+        fun saveData(outState: Bundle)
     }
 }
