@@ -19,9 +19,8 @@ class WeatherActivity : AppCompatActivity(), WeatherContract.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_weather)
         BaseApp.component.inject(this)
-        presenter.attach(this)
-        presenter.subscribe()
         setupViewElements()
+        presenter.attach(this)
         presenter.showData()
     }
 

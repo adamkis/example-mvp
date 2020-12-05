@@ -3,7 +3,6 @@ package com.example.app.core
 class BaseContract {
 
     interface Presenter<in T> {
-        fun subscribe()
         fun unsubscribe()
         fun attach(view: T)
     }

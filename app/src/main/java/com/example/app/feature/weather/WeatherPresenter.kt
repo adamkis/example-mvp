@@ -1,9 +1,9 @@
 package com.example.app.feature.weather
 
 import com.example.app.BaseApp
+import com.example.app.data.SharedPreferencesManager
 import com.example.app.data.api.WeatherApi
 import com.example.app.feature.weather.mapper.WeatherDataMapper
-import com.example.app.data.SharedPreferencesManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -21,8 +21,6 @@ class WeatherPresenter @Inject constructor(
     init {
         BaseApp.component.inject(this)
     }
-
-    override fun subscribe() {}
 
     override fun unsubscribe() {
         subscriptions.clear()
