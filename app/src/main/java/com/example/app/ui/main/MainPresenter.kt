@@ -25,7 +25,19 @@ class MainPresenter: MainContract.Presenter {
     }
 
     override fun loadData() {
-
+        val subscribe = api.getBudapestWeather()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    view.showToast(it.toString())
+                    Log.d("Weather", "Printing Budapest weather")
+                    Log.d("Weather", it.toString())
+                }, { error ->
+                    error.printStackTrace()
+                    Log.d("Weather", error.message!!)
+                    view.showToast(error.message!!)
+                })
+        subscriptions.add(subscribe)
     }
 
 }

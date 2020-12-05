@@ -9,6 +9,9 @@ import retrofit2.http.GET
 
 interface ApiServiceInterface {
 
+    @GET("location/804365/")
+    fun getBudapestWeather(): Observable<WeatherDataResponse>
+
     companion object Factory {
         fun create(): ApiServiceInterface {
             val retrofit = retrofit2.Retrofit.Builder()
