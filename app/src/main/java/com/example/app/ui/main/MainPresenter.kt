@@ -34,12 +34,11 @@ class MainPresenter @Inject constructor(
     }
 
     override fun loadWeatherData() {
-        val wd = sharedPreferencesManager.loadWeatherData()
-        Log.d("xzxz", wd.toString())
         val subscribe = api.getBudapestWeather()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
+                    sharedPreferencesManager.saveWeatherData(it)
                     view.showWeatherData(it)
                     view.showLoading(false)
                 }, {
