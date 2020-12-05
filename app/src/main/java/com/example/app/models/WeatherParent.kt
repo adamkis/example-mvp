@@ -1,6 +1,7 @@
 package com.example.app.models
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class WeatherParent(
         @SerializedName("latt_long")
@@ -11,4 +12,4 @@ data class WeatherParent(
         val title: String = "",
         @SerializedName("location_type")
         val locationType: String = ""
-)
+): Serializable

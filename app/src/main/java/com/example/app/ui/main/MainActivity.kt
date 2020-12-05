@@ -1,6 +1,7 @@
 package com.example.app.ui.main
 
 import android.os.Bundle
+import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.Toast
 import com.bumptech.glide.Glide
@@ -14,6 +15,8 @@ class MainActivity: AppCompatActivity(), MainContract.View {
 
     @Inject lateinit var presenter: MainContract.Presenter
 
+    private var weatherDataResponse: WeatherDataResponse? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -21,8 +24,22 @@ class MainActivity: AppCompatActivity(), MainContract.View {
         presenter.attach(this)
         presenter.subscribe()
         setupViewElements()
-        showLoading(true)
-        presenter.loadWeatherData()
+        showData(savedInstanceState)
+    }
+
+    private fun showData(savedInstanceState: Bundle?) {
+        (savedInstanceState?.getSerializable(WEATHER_DATA_INSTANCE_STATE)
+                as? WeatherDataResponse)?.let {
+            showWeatherData(it)
+        } ?: run {
+            showLoading(true)
+            presenter.loadWeatherData()
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putSerializable(WEATHER_DATA_INSTANCE_STATE, weatherDataResponse)
+        super.onSaveInstanceState(outState)
     }
 
     override fun onDestroy() {
@@ -37,6 +54,7 @@ class MainActivity: AppCompatActivity(), MainContract.View {
     }
 
     override fun showWeatherData(weatherDataResponse: WeatherDataResponse) {
+        this.weatherDataResponse = weatherDataResponse // tODO do not store here
         val weatherSource = weatherDataResponse.consolidatedWeather?.get(0)
         val iconValue = weatherSource?.weatherStateAbbr // TODO move to mapper
         Glide.with(this)
@@ -53,5 +71,9 @@ class MainActivity: AppCompatActivity(), MainContract.View {
 
     override fun showLoading(isLoading: Boolean) {
         srlRefresh.isRefreshing = isLoading
+    }
+
+    companion object {
+        const val WEATHER_DATA_INSTANCE_STATE = "WEATHER_DATA_INSTANCE_STATE"
     }
 }
