@@ -1,7 +1,9 @@
 package com.example.app.ui.main
 
+import android.util.Log
 import com.example.app.BaseApp
 import com.example.app.api.ApiServiceInterface
+import com.example.app.util.SharedPreferencesManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -9,6 +11,7 @@ import retrofit2.Retrofit
 import javax.inject.Inject
 
 class MainPresenter @Inject constructor(
+        private val sharedPreferencesManager: SharedPreferencesManager,
         retrofit: Retrofit
 ) : MainContract.Presenter {
 
@@ -31,6 +34,8 @@ class MainPresenter @Inject constructor(
     }
 
     override fun loadWeatherData() {
+        val wd = sharedPreferencesManager.loadWeatherData()
+        Log.d("xzxz", wd.toString())
         val subscribe = api.getBudapestWeather()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

@@ -20,7 +20,8 @@ class SharedPreferencesManager @Inject constructor(
     }
 
     fun loadWeatherData(): WeatherDataResponse? {
-        return gson.fromJson(sharedPref.getString(KEY_WEATHER_DATA, null), WeatherDataResponse::class.java)
+        return gson.fromJson(sharedPref.getString(KEY_WEATHER_DATA, null),
+                WeatherDataResponse::class.java)
     }
 
     companion object {
