@@ -3,9 +3,11 @@ package com.example.app.ui.main
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.Toast
+import com.bumptech.glide.Glide
 import com.example.app.BaseApp
 import com.example.app.R
 import com.example.app.models.WeatherDataResponse
+import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
 class MainActivity: AppCompatActivity(), MainContract.View {
@@ -27,6 +29,9 @@ class MainActivity: AppCompatActivity(), MainContract.View {
     }
 
     override fun showWeatherData(weatherDataResponse: WeatherDataResponse) {
+        Glide.with(this)
+                .load("https://www.metaweather.com/static/img/weather/png/sn.png")
+                .into(ivCurrentWeather)
         Toast.makeText(this, weatherDataResponse.toString(), Toast.LENGTH_LONG).show()
     }
 

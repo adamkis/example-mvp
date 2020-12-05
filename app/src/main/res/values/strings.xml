@@ -1,10 +1,3 @@
 <resources>
-    <string name="app_name">Jibble Test Task</string>
-
-    <!-- Fragment tags -->
-    <string name="fragment_about_tag">About Fragment</string>
-    <string name="fragment_list_tag">List Fragment</string>
-
-    <!-- About text -->
-    <string name="info">Info</string>
+    <string name="app_name">Sample App</string>
 </resources>
