@@ -1,4 +1,4 @@
-package com.example.app.ui.model
+package com.example.app.feature.weather.model
 
 data class WeatherVM(
         val icon: String,

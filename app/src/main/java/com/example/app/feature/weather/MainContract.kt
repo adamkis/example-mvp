@@ -1,7 +1,7 @@
-package com.example.app.ui.main
+package com.example.app.feature.weather
 
-import com.example.app.ui.base.BaseContract
-import com.example.app.ui.model.WeatherVM
+import com.example.app.core.BaseContract
+import com.example.app.feature.weather.model.WeatherVM
 
 class MainContract {
 

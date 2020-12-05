@@ -1,9 +1,9 @@
-package com.example.app.domain
+package com.example.app.feature.weather.mapper
 
 import android.content.Context
 import com.example.app.R
 import com.example.app.models.WeatherDataResponse
-import com.example.app.ui.model.WeatherVM
+import com.example.app.feature.weather.model.WeatherVM
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject

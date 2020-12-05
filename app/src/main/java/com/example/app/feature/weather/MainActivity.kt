@@ -1,4 +1,4 @@
-package com.example.app.ui.main
+package com.example.app.feature.weather
 
 import android.os.Bundle
 import android.widget.Toast
@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.app.BaseApp
 import com.example.app.R
-import com.example.app.ui.model.WeatherVM
+import com.example.app.feature.weather.model.WeatherVM
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 

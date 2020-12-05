@@ -1,8 +1,8 @@
 package com.example.app.di.component
 
 import com.example.app.di.module.*
-import com.example.app.ui.main.MainActivity
-import com.example.app.ui.main.MainPresenter
+import com.example.app.feature.weather.MainActivity
+import com.example.app.feature.weather.MainPresenter
 import dagger.Component
 import javax.inject.Singleton
 

@@ -1,4 +1,4 @@
-package com.example.app.ui.base
+package com.example.app.core
 
 class BaseContract {
 

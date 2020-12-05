@@ -1,9 +1,9 @@
 package com.example.app.di.module
 
 import com.example.app.api.WeatherApi
-import com.example.app.domain.WeatherDataMapper
-import com.example.app.ui.main.MainContract
-import com.example.app.ui.main.MainPresenter
+import com.example.app.feature.weather.mapper.WeatherDataMapper
+import com.example.app.feature.weather.MainContract
+import com.example.app.feature.weather.MainPresenter
 import com.example.app.util.SharedPreferencesManager
 import dagger.Module
 import dagger.Provides
