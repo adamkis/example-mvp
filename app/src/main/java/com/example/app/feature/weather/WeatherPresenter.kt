@@ -1,6 +1,5 @@
 package com.example.app.feature.weather
 
-import com.example.app.BaseApp
 import com.example.app.data.SharedPreferencesManager
 import com.example.app.data.api.WeatherApi
 import com.example.app.feature.weather.mapper.WeatherDataMapper
@@ -17,10 +16,6 @@ class WeatherPresenter @Inject constructor(
 
     private val subscriptions = CompositeDisposable()
     private lateinit var view: WeatherContract.View
-
-    init {
-        BaseApp.component.inject(this)
-    }
 
     override fun unsubscribe() {
         subscriptions.clear()

@@ -13,7 +13,7 @@ import javax.inject.Inject
 class WeatherActivity : AppCompatActivity(), WeatherContract.View {
 
     @Inject
-    lateinit var presenter: WeatherContract.Presenter
+    lateinit var presenter: WeatherPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
