@@ -1,5 +1,6 @@
 package com.example.app.feature.weatherList
 
+import android.util.Log
 import com.example.app.data.api.WeatherApi
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
@@ -17,5 +18,13 @@ class WeatherListPresenter @Inject constructor(
 
     override fun attach(view: WeatherListContract.View) {
         this.view = view
+    }
+
+    override fun onItemClicked(action: WeatherListAdapter.Action) {
+        when (action) {
+            is WeatherListAdapter.Action.ItemClicked -> {
+                Log.d("WeatherListPresenter", action.text)
+            }
+        }
     }
 }

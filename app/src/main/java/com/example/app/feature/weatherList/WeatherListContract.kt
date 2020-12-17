@@ -5,9 +5,9 @@ import com.example.app.feature.weather.model.WeatherVM
 
 class WeatherListContract {
 
-    interface View : BaseContract.View {
-    }
+    interface View : BaseContract.View
 
     interface Presenter : BaseContract.Presenter<View> {
+        fun onItemClicked(action: WeatherListAdapter.Action)
     }
 }
