@@ -1,17 +1,17 @@
 package com.example.app.data
 
-import android.content.Context
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
+import com.example.app.core.AppContext
 import com.example.app.data.model.WeatherDataResponse
 import com.google.gson.Gson
 import javax.inject.Inject
 
 
 class SharedPreferencesManager @Inject constructor(
-        context: Context,
+        appContext: AppContext,
         private val gson: Gson
 ) {
 
@@ -23,12 +23,12 @@ class SharedPreferencesManager @Inject constructor(
             .setKeySize(MasterKey.DEFAULT_AES_GCM_MASTER_KEY_SIZE)
             .build()
 
-    private val masterKey = MasterKey.Builder(context)
+    private val masterKey = MasterKey.Builder(appContext.context)
             .setKeyGenParameterSpec(keyGenParameterSpec)
             .build()
 
     private val sharedPref = EncryptedSharedPreferences.create(
-            context,
+            appContext.context,
             KEY_SHARED_PREF_FILE,
             masterKey,
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,

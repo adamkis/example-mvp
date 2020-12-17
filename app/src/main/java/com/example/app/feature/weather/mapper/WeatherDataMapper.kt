@@ -1,7 +1,7 @@
 package com.example.app.feature.weather.mapper
 
-import android.content.Context
 import com.example.app.R
+import com.example.app.core.AppContext
 import com.example.app.data.model.WeatherDataResponse
 import com.example.app.feature.weather.model.WeatherVM
 import java.text.SimpleDateFormat
@@ -10,14 +10,14 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class WeatherDataMapper @Inject constructor(private val context: Context) {
+class WeatherDataMapper @Inject constructor(private val appContext: AppContext) {
 
     fun map(weatherDataResponse: WeatherDataResponse): WeatherVM {
         val weatherSource = weatherDataResponse.consolidatedWeather?.get(0)
         return WeatherVM(
                 icon = "https://www.metaweather.com/static/img/weather/png/" +
                         "${weatherSource?.weatherStateAbbr}.png",
-                temp = context.getString(R.string.temp_in_celsius, weatherSource?.theTemp),
+                temp = appContext.context.getString(R.string.temp_in_celsius, weatherSource?.theTemp),
                 description = weatherSource?.weatherStateName ?: "",
                 dateTime = weatherDataResponse.time,
                 dateTimeMillis = parseDate(weatherDataResponse.time)

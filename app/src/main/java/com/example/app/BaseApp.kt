@@ -3,14 +3,14 @@ package com.example.app
 import android.app.Application
 import com.example.app.di.component.ApplicationComponent
 import com.example.app.di.component.DaggerApplicationComponent
-import com.example.app.di.module.ContextModule
+import com.example.app.di.module.AppContextModule
 
 class BaseApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
         component = DaggerApplicationComponent.builder()
-                .contextModule(ContextModule(this))
+                .appContextModule(AppContextModule(this))
                 .build()
     }
 

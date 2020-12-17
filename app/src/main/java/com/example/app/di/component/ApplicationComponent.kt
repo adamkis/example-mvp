@@ -1,6 +1,6 @@
 package com.example.app.di.component
 
-import com.example.app.di.module.ContextModule
+import com.example.app.di.module.AppContextModule
 import com.example.app.di.module.GsonModule
 import com.example.app.di.module.RetrofitModule
 import com.example.app.di.module.WeatherApiModule
@@ -13,7 +13,7 @@ import javax.inject.Singleton
 @Singleton
 @Component(modules = [
     RetrofitModule::class,
-    ContextModule::class,
+    AppContextModule::class,
     GsonModule::class,
     WeatherApiModule::class
 ])
