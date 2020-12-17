@@ -1,15 +1,18 @@
 package com.example.app.feature.weatherList
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.app.BaseApp
 import com.example.app.R
+import com.example.app.core.BaseActivity
 import kotlinx.android.synthetic.main.activity_weather_list.*
 import javax.inject.Inject
 
-class WeatherListActivity : AppCompatActivity(), WeatherListContract.View {
+class WeatherListActivity : BaseActivity(), WeatherListContract.View {
 
     @Inject
     lateinit var presenter: WeatherListPresenter
@@ -48,5 +51,9 @@ class WeatherListActivity : AppCompatActivity(), WeatherListContract.View {
     }
 
     override fun showLoading(isLoading: Boolean) {
+    }
+
+    companion object {
+        fun createIntent(context: Context) = Intent(context, WeatherListActivity::class.java)
     }
 }

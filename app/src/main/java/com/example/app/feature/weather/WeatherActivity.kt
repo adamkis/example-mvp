@@ -6,11 +6,12 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.app.BaseApp
 import com.example.app.R
+import com.example.app.core.BaseActivity
 import com.example.app.feature.weather.model.WeatherVM
 import kotlinx.android.synthetic.main.activity_weather.*
 import javax.inject.Inject
 
-class WeatherActivity : AppCompatActivity(), WeatherContract.View {
+class WeatherActivity : BaseActivity(), WeatherContract.View {
 
     @Inject
     lateinit var presenter: WeatherPresenter

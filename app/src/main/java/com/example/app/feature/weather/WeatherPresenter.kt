@@ -6,6 +6,7 @@ import com.example.app.data.SharedPreferencesManager
 import com.example.app.data.api.WeatherApi
 import com.example.app.feature.weather.mapper.WeatherDataMapper
 import com.example.app.feature.weatherList.WeatherListActivity
+import com.example.app.feature.weatherList.WeatherListNavigator
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -15,7 +16,7 @@ class WeatherPresenter @Inject constructor(
         private val sharedPreferencesManager: SharedPreferencesManager,
         private val weatherApi: WeatherApi,
         private val weatherDataMapper: WeatherDataMapper,
-        private val context: Context // TODO use navigator instead
+        private val weatherListNavigator: WeatherListNavigator
 ) : WeatherContract.Presenter {
 
     private val subscriptions = CompositeDisposable()
@@ -63,9 +64,7 @@ class WeatherPresenter @Inject constructor(
     }
 
     override fun onFabClicked() {
-        context.startActivity(Intent(context, WeatherListActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        })
+        view.let { weatherListNavigator.startWeatherList(it.viewContext()) }
     }
 
     companion object {
