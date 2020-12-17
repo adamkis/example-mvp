@@ -43,6 +43,7 @@ dependencies {
     // ui
     implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swiperefreshlayout_version"
+    implementation "com.google.android.material:material:$material_version"
     // test
     testImplementation "junit:junit:$junit_version"
     androidTestImplementation "androidx.test.ext:junit:$android_junit_version"
