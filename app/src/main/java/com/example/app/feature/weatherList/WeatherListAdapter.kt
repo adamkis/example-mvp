@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.app.R
 import com.example.app.util.inflate
 
-class WeatherListAdapter (private val callback: (Action) -> Unit) : RecyclerView.Adapter<WeatherListAdapter.ViewHolder>() {
+class WeatherListAdapter(private val callback: (Action) -> Unit) : RecyclerView.Adapter<WeatherListAdapter.ViewHolder>() {
 
     private val itemList: ArrayList<String> = arrayListOf()
 
@@ -16,7 +16,7 @@ class WeatherListAdapter (private val callback: (Action) -> Unit) : RecyclerView
         notifyDataSetChanged()
     }
 
-    override fun getItemViewType(position: Int): Int  = if (position < itemList.size) {
+    override fun getItemViewType(position: Int): Int = if (position < itemList.size) {
         VIEW_TYPE_ITEM
     } else {
         VIEW_TYPE_LOADING
@@ -24,9 +24,9 @@ class WeatherListAdapter (private val callback: (Action) -> Unit) : RecyclerView
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return if (viewType == VIEW_TYPE_ITEM) {
-            ViewHolder.ItemHolder(parent)
+            ViewHolder.ItemHolder(parent, callback)
         } else {
-            ViewHolder.LoadingHolder(parent)
+            ViewHolder.LoadingHolder(parent, callback)
         }
     }
 
@@ -35,18 +35,24 @@ class WeatherListAdapter (private val callback: (Action) -> Unit) : RecyclerView
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         (holder as ViewHolder.ItemHolder).onBind(itemList[position])
     }
+
     sealed class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        class ItemHolder(rootView: ViewGroup) : ViewHolder(rootView.inflate(R.layout.item_weather_list)) {
+        class ItemHolder(rootView: ViewGroup, private val callback: (Action) -> Unit)
+            : ViewHolder(rootView.inflate(R.layout.item_weather_list)) {
             private val tvText = itemView.findViewById<TextView>(R.id.tvText)
 
             fun onBind(text: String) {
                 tvText.text = text
+                itemView.setOnClickListener {
+                    callback.invoke(Action.ItemClicked(text))
+                }
             }
         }
 
         // TODO use different res
-        class LoadingHolder(rootView: ViewGroup) : ViewHolder(rootView.inflate(R.layout.item_weather_list))
+        class LoadingHolder(rootView: ViewGroup, callback: (Action) -> Unit)
+            : ViewHolder(rootView.inflate(R.layout.item_weather_list))
     }
 
     sealed class Action {
