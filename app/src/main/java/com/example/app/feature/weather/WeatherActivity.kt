@@ -2,7 +2,6 @@ package com.example.app.feature.weather
 
 import android.os.Bundle
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.app.BaseApp
 import com.example.app.R

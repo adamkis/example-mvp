@@ -1,11 +1,8 @@
 package com.example.app.feature.weather
 
-import android.content.Context
-import android.content.Intent
 import com.example.app.data.SharedPreferencesManager
 import com.example.app.data.api.WeatherApi
 import com.example.app.feature.weather.mapper.WeatherDataMapper
-import com.example.app.feature.weatherList.WeatherListActivity
 import com.example.app.feature.weatherList.WeatherListNavigator
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
