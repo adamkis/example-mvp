@@ -21,5 +21,7 @@
             </intent-filter>
         </activity>
 
+        <activity android:name="com.example.app.feature.weatherList.WeatherListActivity" />
+
     </application>
 </manifest>

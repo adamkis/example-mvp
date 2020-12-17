@@ -33,6 +33,9 @@ class WeatherActivity : AppCompatActivity(), WeatherContract.View {
         srlRefresh.setOnRefreshListener {
             presenter.loadWeatherData()
         }
+        fab.setOnClickListener {
+            presenter.onFabClicked()
+        }
     }
 
     override fun showWeatherData(weatherVM: WeatherVM) {

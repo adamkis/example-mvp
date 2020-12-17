@@ -1,8 +1,11 @@
 package com.example.app.feature.weather
 
+import android.content.Context
+import android.content.Intent
 import com.example.app.data.SharedPreferencesManager
 import com.example.app.data.api.WeatherApi
 import com.example.app.feature.weather.mapper.WeatherDataMapper
+import com.example.app.feature.weatherList.WeatherListActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -11,7 +14,8 @@ import javax.inject.Inject
 class WeatherPresenter @Inject constructor(
         private val sharedPreferencesManager: SharedPreferencesManager,
         private val weatherApi: WeatherApi,
-        private val weatherDataMapper: WeatherDataMapper
+        private val weatherDataMapper: WeatherDataMapper,
+        private val context: Context // TODO use navigator instead
 ) : WeatherContract.Presenter {
 
     private val subscriptions = CompositeDisposable()
@@ -56,6 +60,12 @@ class WeatherPresenter @Inject constructor(
                     view.showLoading(false)
                 })
         subscriptions.add(subscribe)
+    }
+
+    override fun onFabClicked() {
+        context.startActivity(Intent(context, WeatherListActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        })
     }
 
     companion object {
