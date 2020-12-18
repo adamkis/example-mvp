@@ -1,12 +1,14 @@
 package com.example.app.feature.weatherList
 
 import android.util.Log
+import com.example.app.R
+import com.example.app.core.ResourceResolver
 import com.example.app.data.api.WeatherApi
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
 class WeatherListPresenter @Inject constructor(
-        private val weatherApi: WeatherApi
+        private val resourceResolver: ResourceResolver
 ) : WeatherListContract.Presenter {
 
     private val subscriptions = CompositeDisposable()
@@ -24,6 +26,7 @@ class WeatherListPresenter @Inject constructor(
         when (action) {
             is WeatherListAdapter.Action.ItemClicked -> {
                 Log.d("WeatherListPresenter", action.text)
+                Log.d("WeatherListPresenter", resourceResolver.getString(R.string.app_name))
             }
         }
     }

@@ -1,9 +1,6 @@
 package com.example.app.di.component
 
-import com.example.app.di.module.AppContextModule
-import com.example.app.di.module.GsonModule
-import com.example.app.di.module.RetrofitModule
-import com.example.app.di.module.WeatherApiModule
+import com.example.app.di.module.*
 import com.example.app.feature.weather.WeatherActivity
 import com.example.app.feature.weather.WeatherPresenter
 import com.example.app.feature.weatherList.WeatherListActivity
@@ -15,7 +12,8 @@ import javax.inject.Singleton
     RetrofitModule::class,
     AppContextModule::class,
     GsonModule::class,
-    WeatherApiModule::class
+    WeatherApiModule::class,
+    ResourceResolverModule::class
 ])
 interface ApplicationComponent {
     fun inject(weatherPresenter: WeatherPresenter)
