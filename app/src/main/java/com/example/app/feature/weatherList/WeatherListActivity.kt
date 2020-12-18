@@ -4,14 +4,14 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.app.BaseApp
 import com.example.app.R
 import com.example.app.core.BaseActivity
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_weather_list.*
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class WeatherListActivity : BaseActivity(), WeatherListContract.View {
 
     @Inject
@@ -22,7 +22,6 @@ class WeatherListActivity : BaseActivity(), WeatherListContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_weather_list)
-        BaseApp.component.inject(this)
         setupViewElements()
         presenter.attach(this)
         showList()

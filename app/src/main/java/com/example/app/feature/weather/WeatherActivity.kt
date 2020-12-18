@@ -3,13 +3,14 @@ package com.example.app.feature.weather
 import android.os.Bundle
 import android.widget.Toast
 import com.bumptech.glide.Glide
-import com.example.app.BaseApp
 import com.example.app.R
 import com.example.app.core.BaseActivity
 import com.example.app.feature.weather.model.WeatherVM
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_weather.*
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class WeatherActivity : BaseActivity(), WeatherContract.View {
 
     @Inject
@@ -18,7 +19,6 @@ class WeatherActivity : BaseActivity(), WeatherContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_weather)
-        BaseApp.component.inject(this)
         setupViewElements()
         presenter.attach(this)
         presenter.showData()

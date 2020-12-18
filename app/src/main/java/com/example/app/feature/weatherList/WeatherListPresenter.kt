@@ -3,7 +3,6 @@ package com.example.app.feature.weatherList
 import android.util.Log
 import com.example.app.R
 import com.example.app.core.ResourceResolver
-import com.example.app.data.api.WeatherApi
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
