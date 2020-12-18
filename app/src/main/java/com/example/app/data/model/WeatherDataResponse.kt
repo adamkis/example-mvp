@@ -1,7 +1,6 @@
 package com.example.app.data.model
 
 import com.google.gson.annotations.SerializedName
-import java.io.Serializable
 
 data class WeatherDataResponse(
         @SerializedName("sun_set")
@@ -28,4 +27,4 @@ data class WeatherDataResponse(
         val title: String = "",
         @SerializedName("location_type")
         val locationType: String = ""
-): Serializable
+)

@@ -1,7 +1,6 @@
 package com.example.app.data.model
 
 import com.google.gson.annotations.SerializedName
-import java.io.Serializable
 
 data class ConsolidatedWeatherItem(
         @SerializedName("visibility")
@@ -34,4 +33,4 @@ data class ConsolidatedWeatherItem(
         val maxTemp: Double = 0.0,
         @SerializedName("air_pressure")
         val airPressure: Double = 0.0
-): Serializable
+)
