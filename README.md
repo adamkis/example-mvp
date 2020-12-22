@@ -7,3 +7,7 @@ Improvements for the future:
 - Introduce use cases and domain layer
 - introduce navigation components
 - introduce feature modules
+- unit tests
+- UI tests
+- Kotlin DSL
+- Convert to MVVM or to Clean
