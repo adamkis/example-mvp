@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.os.Build
 import android.os.IBinder
 import android.util.Log
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.example.app.R
@@ -74,9 +75,9 @@ class MyForegroundService : Service() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-//                    sharedPreferencesManager.saveWeatherData(it)
-//                    view.showWeatherData(weatherDataMapper.map(it))
-                    Log.d("xzxz", it.string())
+                    val responseString = it.string()
+                    Log.d("xzxz", responseString)
+                    Toast.makeText(applicationContext, responseString, Toast.LENGTH_SHORT).show()
                 }, {
                     it.printStackTrace()
                 })
