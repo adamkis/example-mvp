@@ -6,12 +6,15 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.IBinder
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.example.app.R
 import com.example.app.feature.weather.WeatherActivity
+import io.reactivex.Observable
+import java.util.concurrent.TimeUnit
 
-class MyForegroundService: Service() {
+class MyForegroundService : Service() {
 
     override fun onCreate() {
         super.onCreate()
@@ -41,11 +44,20 @@ class MyForegroundService: Service() {
 
         startForeground(1, notification)
 
+        startRepeatedDownload()
+
         return START_NOT_STICKY
     }
 
+    private fun startRepeatedDownload() {
+        Observable.interval(1, TimeUnit.SECONDS)
+                .subscribe {
+                    Log.d("xzxz", "test1")
+                }
+    }
+
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun createNotificationChannel(channelId: String, channelName: String): String{
+    private fun createNotificationChannel(channelId: String, channelName: String): String {
         val chan = NotificationChannel(channelId,
                 channelName, NotificationManager.IMPORTANCE_NONE)
         chan.lightColor = Color.BLUE
