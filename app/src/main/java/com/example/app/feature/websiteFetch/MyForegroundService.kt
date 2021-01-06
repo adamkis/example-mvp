@@ -10,11 +10,23 @@ import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.example.app.R
+import com.example.app.data.api.WeatherApi
 import com.example.app.feature.weather.WeatherActivity
+import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MyForegroundService : Service() {
+
+    @Inject
+    lateinit var weatherApi: WeatherApi
+
+    private val subscriptions = CompositeDisposable()
 
     override fun onCreate() {
         super.onCreate()
@@ -50,10 +62,25 @@ class MyForegroundService : Service() {
     }
 
     private fun startRepeatedDownload() {
-        Observable.interval(1, TimeUnit.SECONDS)
+        Observable.interval(5, TimeUnit.SECONDS)
                 .subscribe {
                     Log.d("xzxz", "test1")
+                    loadWeatherData()
                 }
+    }
+
+    private fun loadWeatherData() {
+        val subscribe = weatherApi.getBudapestWeather()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+//                    sharedPreferencesManager.saveWeatherData(it)
+//                    view.showWeatherData(weatherDataMapper.map(it))
+                    Log.d("xzxz", it.string())
+                }, {
+                    it.printStackTrace()
+                })
+        subscriptions.add(subscribe)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -68,6 +95,7 @@ class MyForegroundService : Service() {
     }
 
     override fun onDestroy() {
+        subscriptions.clear()
         super.onDestroy()
     }
 
