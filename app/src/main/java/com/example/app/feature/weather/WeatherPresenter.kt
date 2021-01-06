@@ -1,5 +1,6 @@
 package com.example.app.feature.weather
 
+import android.util.Log
 import com.example.app.data.SharedPreferencesManager
 import com.example.app.data.api.WeatherApi
 import com.example.app.feature.weather.mapper.WeatherDataMapper
@@ -46,8 +47,9 @@ class WeatherPresenter @Inject constructor(
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    sharedPreferencesManager.saveWeatherData(it)
-                    view.showWeatherData(weatherDataMapper.map(it))
+//                    sharedPreferencesManager.saveWeatherData(it)
+//                    view.showWeatherData(weatherDataMapper.map(it))
+                    Log.d("xzxz", it.string())
                     view.showLoading(false)
                 }, {
                     it.printStackTrace()
