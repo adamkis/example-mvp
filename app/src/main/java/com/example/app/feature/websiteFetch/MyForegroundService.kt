@@ -31,6 +31,9 @@ class MyForegroundService : Service() {
     private val subscriptions = CompositeDisposable()
     private lateinit var mediaPlayer: MediaPlayer
     private var savedWebsiteString: String = ""
+    private lateinit var notificationBuilder: NotificationCompat.Builder
+    private lateinit var notificationManager: NotificationManager
+    private var counter = 1
 
     override fun onCreate() {
         super.onCreate()
@@ -39,6 +42,8 @@ class MyForegroundService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
         val input = intent?.getStringExtra(inputExtra)
 
         val notificationIntent = Intent(this, WeatherActivity::class.java)
@@ -53,14 +58,15 @@ class MyForegroundService : Service() {
                     ""
                 }
 
-        val notification = NotificationCompat.Builder(this, myChannelId)
+        notificationBuilder = NotificationCompat.Builder(this, myChannelId)
                 .setContentTitle(foregroundServiceNotificationTitle)
                 .setContentText(input)
                 .setSmallIcon(R.drawable.ic_launcher_background)
                 .setContentIntent(pendingIntent)
-                .build()
 
-        startForeground(1, notification)
+        val notification = notificationBuilder.build()
+
+        startForeground(notificationId, notification)
 
         startRepeatedDownload()
 
@@ -84,6 +90,7 @@ class MyForegroundService : Service() {
                     Log.d("xzxz", responseString)
                     Toast.makeText(applicationContext, responseString, Toast.LENGTH_SHORT).show()
                     alertForChange(responseString)
+                    updateNotification()
                 }, {
                     it.printStackTrace()
                 })
@@ -97,6 +104,11 @@ class MyForegroundService : Service() {
         if (savedWebsiteString != websiteString) {
             mediaPlayer.start()
         }
+    }
+
+    private fun updateNotification() {
+        notificationBuilder.setContentTitle("${++counter}")
+        notificationManager.notify(notificationId, notificationBuilder.build())
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -120,6 +132,8 @@ class MyForegroundService : Service() {
     }
 
     companion object {
+
+        const val notificationId = 428367
 
         // Intent Constants
         const val inputExtra = "inputExtra"
