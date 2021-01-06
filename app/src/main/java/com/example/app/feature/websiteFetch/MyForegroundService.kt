@@ -38,13 +38,11 @@ class MyForegroundService : Service() {
     override fun onCreate() {
         super.onCreate()
         mediaPlayer = MediaPlayer.create(applicationContext, R.raw.sound)
-        mediaPlayer.isLooping = false
+        mediaPlayer.isLooping = true
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-        val input = intent?.getStringExtra(inputExtra)
 
         val notificationIntent = Intent(this, WeatherActivity::class.java)
         val pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0)
@@ -60,7 +58,8 @@ class MyForegroundService : Service() {
 
         notificationBuilder = NotificationCompat.Builder(this, myChannelId)
                 .setContentTitle(foregroundServiceNotificationTitle)
-                .setContentText(input)
+                .setContentText("oltokozpont")
+//                .setContentText("https://www.reddit.com/new/")
                 .setSmallIcon(R.drawable.ic_launcher_background)
                 .setContentIntent(pendingIntent)
 
@@ -74,7 +73,7 @@ class MyForegroundService : Service() {
     }
 
     private fun startRepeatedDownload() {
-        Observable.interval(5, TimeUnit.SECONDS)
+        Observable.interval(10, TimeUnit.SECONDS)
                 .subscribe {
                     Log.d("xzxz", "test1")
                     loadWeatherData()
@@ -88,7 +87,11 @@ class MyForegroundService : Service() {
                 .subscribe({
                     val responseString = it.string()
                     Log.d("xzxz", responseString)
-                    Toast.makeText(applicationContext, responseString, Toast.LENGTH_SHORT).show()
+                    try {
+                        Toast.makeText(applicationContext, responseString.substring(0, 60), Toast.LENGTH_SHORT).show()
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                     alertForChange(responseString)
                     updateNotification()
                 }, {
@@ -134,9 +137,6 @@ class MyForegroundService : Service() {
     companion object {
 
         const val notificationId = 428367
-
-        // Intent Constants
-        const val inputExtra = "inputExtra"
 
         // Notification Constants
         const val channelID = "myServiceChannel"

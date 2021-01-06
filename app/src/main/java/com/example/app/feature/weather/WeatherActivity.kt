@@ -32,7 +32,6 @@ class WeatherActivity : BaseActivity(), WeatherContract.View {
 
     private fun fetchWebsite() {
         val myServiceIntent = Intent(this, MyForegroundService::class.java)
-        myServiceIntent.putExtra(MyForegroundService.inputExtra, "Test2")
         ContextCompat.startForegroundService(this, myServiceIntent)
     }
 

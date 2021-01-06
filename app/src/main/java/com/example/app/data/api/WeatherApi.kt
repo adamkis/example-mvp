@@ -10,5 +10,6 @@ interface WeatherApi {
     fun getBudapestWeather(): Observable<WeatherDataResponse>
 
     @GET("https://oltopont.dpckorhaz.hu/oltokozpont")
+//    @GET("https://www.reddit.com/new/")
     fun getWebsite(): Observable<ResponseBody>
 }
