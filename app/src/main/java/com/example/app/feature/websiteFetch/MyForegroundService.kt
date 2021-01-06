@@ -30,6 +30,7 @@ class MyForegroundService : Service() {
 
     private val subscriptions = CompositeDisposable()
     private lateinit var mediaPlayer: MediaPlayer
+    private var savedWebsiteString: String = ""
 
     override fun onCreate() {
         super.onCreate()
@@ -75,18 +76,27 @@ class MyForegroundService : Service() {
     }
 
     private fun loadWeatherData() {
-        val subscribe = weatherApi.getBudapestWeather()
+        val subscribe = weatherApi.getWebsite()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     val responseString = it.string()
                     Log.d("xzxz", responseString)
                     Toast.makeText(applicationContext, responseString, Toast.LENGTH_SHORT).show()
-                    mediaPlayer.start()
+                    alertForChange(responseString)
                 }, {
                     it.printStackTrace()
                 })
         subscriptions.add(subscribe)
+    }
+
+    private fun alertForChange(websiteString: String) {
+        if (savedWebsiteString.isEmpty()) {
+            savedWebsiteString = websiteString
+        }
+        if (savedWebsiteString != websiteString) {
+            mediaPlayer.start()
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

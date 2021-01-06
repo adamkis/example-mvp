@@ -6,6 +6,9 @@ import okhttp3.ResponseBody
 import retrofit2.http.GET
 
 interface WeatherApi {
-    @GET("oltokozpont")
-    fun getBudapestWeather(): Observable<ResponseBody>
+    @GET("location/804365/")
+    fun getBudapestWeather(): Observable<WeatherDataResponse>
+
+    @GET("https://oltopont.dpckorhaz.hu/oltokozpont")
+    fun getWebsite(): Observable<ResponseBody>
 }
