@@ -4,6 +4,7 @@ import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.media.MediaPlayer
 import android.os.Build
 import android.os.IBinder
 import android.util.Log
@@ -28,9 +29,12 @@ class MyForegroundService : Service() {
     lateinit var weatherApi: WeatherApi
 
     private val subscriptions = CompositeDisposable()
+    private lateinit var mediaPlayer: MediaPlayer
 
     override fun onCreate() {
         super.onCreate()
+        mediaPlayer = MediaPlayer.create(applicationContext, R.raw.sound)
+        mediaPlayer.isLooping = false
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -78,6 +82,7 @@ class MyForegroundService : Service() {
                     val responseString = it.string()
                     Log.d("xzxz", responseString)
                     Toast.makeText(applicationContext, responseString, Toast.LENGTH_SHORT).show()
+                    mediaPlayer.start()
                 }, {
                     it.printStackTrace()
                 })
