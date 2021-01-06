@@ -3,6 +3,8 @@
     package="com.example.app">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:name="com.example.app.BaseApp"
@@ -23,5 +25,6 @@
 
         <activity android:name="com.example.app.feature.weatherList.WeatherListActivity" />
 
+        <service android:name=".feature.websiteFetch.MyForegroundService" />
     </application>
 </manifest>

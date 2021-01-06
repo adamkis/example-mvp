@@ -1,11 +1,16 @@
 package com.example.app.feature.weather
 
+import android.app.Notification
+import android.app.PendingIntent
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.example.app.R
 import com.example.app.core.BaseActivity
 import com.example.app.feature.weather.model.WeatherVM
+import com.example.app.feature.websiteFetch.MyForegroundService
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_weather.*
 import javax.inject.Inject
@@ -22,6 +27,13 @@ class WeatherActivity : BaseActivity(), WeatherContract.View {
         setupViewElements()
         presenter.attach(this)
         presenter.showData()
+        fetchWebsite()
+    }
+
+    private fun fetchWebsite() {
+        val myServiceIntent = Intent(this, MyForegroundService::class.java)
+        myServiceIntent.putExtra(MyForegroundService.inputExtra, "Test2")
+        ContextCompat.startForegroundService(this, myServiceIntent)
     }
 
     override fun onDestroy() {
